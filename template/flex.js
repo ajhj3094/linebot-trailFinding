@@ -60,9 +60,13 @@ export default {
                   size: 'xs',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -148,12 +152,16 @@ export default {
                 {
                   type: 'text',
                   text: '4.0',
-                  size: 'sm',
+                  size: 'xs',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -239,12 +247,16 @@ export default {
                 {
                   type: 'text',
                   text: '4.0',
-                  size: 'sm',
+                  size: 'xs',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -333,9 +345,13 @@ export default {
                   size: 'sm',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -424,9 +440,13 @@ export default {
                   size: 'sm',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -515,9 +535,13 @@ export default {
                   size: 'sm',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -606,9 +630,13 @@ export default {
                   size: 'sm',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -697,9 +725,13 @@ export default {
                   size: 'sm',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -788,9 +820,13 @@ export default {
                   size: 'sm',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',
@@ -879,9 +915,13 @@ export default {
                   size: 'sm',
                   color: '#8c8c8c',
                   margin: 'md',
-                  flex: 0
+                  flex: 0,
+                  style: 'italic'
                 }
-              ]
+              ],
+              spacing: 'xs',
+              margin: 'md',
+              justifyContent: 'flex-end'
             },
             {
               type: 'box',

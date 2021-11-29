@@ -5,6 +5,8 @@ import { distance } from '../經緯度間距離.js'
 
 export default async (event) => {
   const name = event.message.text.replace('!name ', '')
+  // console.log(event.message.location)
+  // console.log(666)
   try {
     for (const info of data) {
       // !name /登山口/ -> 顯示這個入口的座標
@@ -12,12 +14,12 @@ export default async (event) => {
       if (info.TR_ENTRANCE !== name) {
         for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
           if (info.TR_ENTRANCE[i].memo === name) {
-            console.log(info.TR_ENTRANCE[i].memo)
-            console.log(info.TR_ENTRANCE.length)
+            // console.log(info.TR_ENTRANCE[i].memo)
+            // console.log(info.TR_ENTRANCE.length)
             event.reply({
               type: 'location',
-              title: info.TR_ENTRANCE[i].memo + '-333',
-              address: info.TR_POSITION + '-' + info.TR_ENTRANCE[i].memo,
+              title: '📍' + info.TR_ENTRANCE[i].memo + ' (' + `${i + 1}` + '/' + info.TR_ENTRANCE.length + ')',
+              address: info.TR_CNAME + '-' + info.TR_POSITION,
               latitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lat,
               longitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lng
             })

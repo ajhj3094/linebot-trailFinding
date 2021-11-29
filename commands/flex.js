@@ -2,7 +2,7 @@ import template from '../template/flex.js'
 import { data, data1 } from '../data.js'
 import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default async (event) => {
   const flexX = event.message.text.replace('!flex ', '')
@@ -17,7 +17,7 @@ export default async (event) => {
         for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
           flex.contents.contents.length = info.TR_ENTRANCE.length
           flex.contents.contents[i].body.contents[0].text = info.TR_ENTRANCE[i].memo + '入口' + `(${i + 1}/` + info.TR_ENTRANCE.length + ')'
-          flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = info.TR_ENTRANCE[i].memo + '入口' + `(${i + 1}/` + info.TR_ENTRANCE.length + ')'
+          flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '\n👉點我查看地圖位置'
           flex.contents.contents[i].body.action.text = '!name ' + info.TR_ENTRANCE[i].memo
         }
         event.reply(flex)
@@ -42,7 +42,7 @@ export default async (event) => {
             const tra = data[i].TRAILID
             const dif = data[i].TR_DIF_CLASS
             // 將距離四捨五入到小數點第二位
-            function roundToTwo(num) {
+            function roundToTwo (num) {
               return +(Math.round(num + 'e+2') + 'e-2')
             }
             const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif }
@@ -69,22 +69,36 @@ export default async (event) => {
             flex.contents.contents[i].body.contents[0].text = '🌳' + z[i].trailName
             flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
             // text 只給變數會無效，需要給一個字串
-            flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n👉點我查看更多入口'
+            flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
             flex.contents.contents[i].body.action.text = '!flex ' + z[i].trailName
+            flex.contents.contents[i].body.contents[1].contents[5].size = 'sm'
+            flex.contents.contents[i].body.contents[1].contents[5].text = 'EXPE'
+            flex.contents.contents[i].body.contents[1].contents[5].color = '#800080'
+            // flex.contents.contents[i].body.spacing = 'xs'
+            console.log(flex.contents.contents[i].body.spacing)
+            flex.contents.contents[i].body.contents[2].contents[0].margin = 'md'
             if (z[i].Dif === '1') {
               for (let j = 1; j < 4; j++) {
                 flex.contents.contents[i].body.contents[1].contents[j].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png'
+                flex.contents.contents[i].body.contents[1].contents[5].text = 'EASY'
+                flex.contents.contents[i].body.contents[1].contents[5].color = '#00aa00'
               }
             } else if (z[i].Dif === '2') {
               for (let j = 2; j < 4; j++) {
                 flex.contents.contents[i].body.contents[1].contents[j].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png'
+                flex.contents.contents[i].body.contents[1].contents[5].text = 'NORM'
+                flex.contents.contents[i].body.contents[1].contents[5].color = '#ff8c00'
               }
             } else if (z[i].Dif === '3') {
               for (let j = 3; j < 4; j++) {
                 flex.contents.contents[i].body.contents[1].contents[j].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png'
+                flex.contents.contents[i].body.contents[1].contents[5].text = 'HARD'
+                flex.contents.contents[i].body.contents[1].contents[5].color = '#ff0000'
               }
             } else if (z[i].Dif === '5') {
               flex.contents.contents[i].body.contents[1].contents[4].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png'
+              flex.contents.contents[i].body.contents[1].contents[5].text = 'IMPO'
+              flex.contents.contents[i].body.contents[1].contents[5].color = '#d2691e'
             }
           }
           event.reply(flex)
