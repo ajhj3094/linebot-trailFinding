@@ -1,6 +1,6 @@
-import { data } from '../data.js'
+import { data, data1 } from '../data.js'
 import transform from '../轉換經緯度.js'
-import { data1 } from '../data.js'
+
 import { distance } from '../經緯度間距離.js'
 
 export default async (event) => {
@@ -10,20 +10,21 @@ export default async (event) => {
       // !name /登山口/ -> 顯示這個入口的座標
       // 需要再想更好的寫法，判斷陣列內物件的值等於 name
       if (info.TR_ENTRANCE !== name) {
-      for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
-        if (info.TR_ENTRANCE[i].memo == name) {
-          console.log(info.TR_ENTRANCE[i].memo)
-          console.log(info.TR_ENTRANCE.length)
-          event.reply({
-            type: 'location',
-            title: info.TR_ENTRANCE[i].memo + '-333',
-            address: info.TR_POSITION + '-' + info.TR_ENTRANCE[i].memo,
-            latitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lat,
-            longitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lng
-          })
+        for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
+          if (info.TR_ENTRANCE[i].memo === name) {
+            console.log(info.TR_ENTRANCE[i].memo)
+            console.log(info.TR_ENTRANCE.length)
+            event.reply({
+              type: 'location',
+              title: info.TR_ENTRANCE[i].memo + '-333',
+              address: info.TR_POSITION + '-' + info.TR_ENTRANCE[i].memo,
+              latitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lat,
+              longitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lng
+            })
+            // ** 意倫幫加 return，否則原本有時會'找不到'、有時有回傳，有時'找不到'卻也有回傳 ** //
+            return
+          }
         }
-      }
-      
       }
       // !name /步道名稱/ -> 該步道的入口座標，有時回傳多個、有時回傳一個
       // 跑 data 這個陣列內含有 name 的值，這裡是回傳該 name 所屬的整個物件
@@ -46,33 +47,33 @@ export default async (event) => {
           const newGps = ts.gps.split(' ')
           const Px = newGps[0]
           const Py = newGps[1]
-          let arr = []
-          let array = []
+          const arr = []
+          const array = []
           for (let i = 0; i < data.length; i++) {
             // 總共 125 筆資料，但是第 120 筆沒有登山口的座標資料，需要 continue 跳過，所以會回傳 124 筆
-            if (i == 120) { continue }
-            let dt = distance(Px, Py, transform(data[i].TR_ENTRANCE[0].x, data[i].TR_ENTRANCE[0].y).lat, transform(data[i].TR_ENTRANCE[0].x, data[i].TR_ENTRANCE[0].y).lng, 'K')
-            let trail = data[i].TR_CNAME
-            let ent = data[i].TR_ENTRANCE[0].memo
-            let url = data[i].URL
-            let len = data[i].TR_LENGTH
+            if (i === 120) { continue }
+            const dt = distance(Px, Py, transform(data[i].TR_ENTRANCE[0].x, data[i].TR_ENTRANCE[0].y).lat, transform(data[i].TR_ENTRANCE[0].x, data[i].TR_ENTRANCE[0].y).lng, 'K')
+            const trail = data[i].TR_CNAME
+            const ent = data[i].TR_ENTRANCE[0].memo
+            const url = data[i].URL
+            const len = data[i].TR_LENGTH
             // 將距離四捨五入到小數點第二位
-            function roundToTwo(num) {
-              return +(Math.round(num + "e+2") + "e-2")
+            function roundToTwo (num) {
+              return +(Math.round(num + 'e+2') + 'e-2')
             }
             const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url }
             array.push(object)
             arr.push(roundToTwo(dt))
           }
           // 124 筆資料由小到大排序
-          let sequence = arr.sort((a, b) => {
+          const sequence = arr.sort((a, b) => {
             return a - b
           })
           // 最外層的 for of 得從 sequence 跑，距離才會由小到大排序
-          let z = []
+          const z = []
           for (let i = 0; i < sequence.length; i++) {
             for (let j = 0; j < array.length; j++) {
-              if (sequence[i] == array[j].DistanceKm) {
+              if (sequence[i] === array[j].DistanceKm) {
                 z.push(array[j])
               }
             }

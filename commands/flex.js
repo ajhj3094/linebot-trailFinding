@@ -2,6 +2,7 @@ import template from '../template/flex.js'
 import { data, data1 } from '../data.js'
 import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
+import axios from 'axios'
 
 export default async (event) => {
   const flexX = event.message.text.replace('!flex ', '')
@@ -41,7 +42,7 @@ export default async (event) => {
             const tra = data[i].TRAILID
             const dif = data[i].TR_DIF_CLASS
             // 將距離四捨五入到小數點第二位
-            function roundToTwo (num) {
+            function roundToTwo(num) {
               return +(Math.round(num + 'e+2') + 'e-2')
             }
             const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif }
