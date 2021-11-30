@@ -2,13 +2,13 @@ import template from '../template/flex.js'
 import { data } from '../data.js'
 import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
+import axios from 'axios'
 
 export default async (event) => {
   // event.message.latitude
   // event.message.longitude
   const flex = JSON.parse(JSON.stringify(template))
   try {
-    console.log(666)
     flex.altText = '哈囉'
     const arr = []
     const array = []
@@ -24,7 +24,7 @@ export default async (event) => {
       const tra = data[i].TRAILID
       const dif = data[i].TR_DIF_CLASS
       // 將距離四捨五入到小數點第二位
-      function roundToTwo (num) {
+      function roundToTwo(num) {
         return +(Math.round(num + 'e+2') + 'e-2')
       }
       const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif }
@@ -48,7 +48,15 @@ export default async (event) => {
     for (let i = 0; i < 8; i++) {
       flex.contents.contents.length = 8
       flex.contents.contents[i].body.contents[0].text = '🌳' + z[i].trailName
-      flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+      // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+      await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg')
+        .then(({ data }) => {
+          // console.log('yes')
+          flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg'
+        }).catch(error => {
+          // console.log('no')
+          flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+        })
       // text 只給變數會無效，需要給一個字串
       flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
       flex.contents.contents[i].body.action.text = '!flex ' + z[i].trailName

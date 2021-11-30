@@ -1,15 +1,18 @@
 import template from '../template/flex.js'
+// import template2 from '../template/quick.js'
 import { data, data1 } from '../data.js'
 import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
 import axios from 'axios'
 import cheerio from 'cheerio'
-import linebot from 'linebot'
+// import linebot from 'linebot'
 
 export default async (event) => {
   const flexX = event.message.text.replace('!flex ', '')
-
+  // console.log(event)
   const flex = JSON.parse(JSON.stringify(template))
+  // const quick = JSON.parse(JSON.stringify(template2))
+
   try {
     flex.altText = '哈囉'
     for (const info of data) {
@@ -73,32 +76,42 @@ export default async (event) => {
           // !flex /火車站/ -> 顯示最近的 8 個步道
           for (let i = 0; i < 8; i++) {
             flex.contents.contents.length = 8
-            flex.contents.contents[i].body.contents[0].text = '🌳' + z[i].trailName
+            flex.contents.contents[i].body.contents[0].text = '🌳 ' + z[i].trailName
             // 方法一、讓無效的圖片網址空白
             // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+            // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg'
             // 方法二、假圖放空格，但這裡必須要 await，用此方法會等待他跑 8 次才會回覆 !flex，大概隔 3 秒。
-            await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg')
+            // 這邊必須使用 await，否則圖片會失效
+            // await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg')
+            //   .then(({ data }) => {
+            //     // console.log('yes')
+            //     flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+            //   }).catch(error => {
+            //     // console.log('no')
+            //     flex.contents.contents[i].hero.url = 'https://picsum.photos/1920/1080/?random=' + `${i + 15}`
+            //   })
+            await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg')
               .then(({ data }) => {
                 // console.log('yes')
-                flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+                flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg'
               }).catch(error => {
                 // console.log('no')
-                flex.contents.contents[i].hero.url = 'https://picsum.photos/1920/1080/?random=' + `${i + 15}`
+                flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
               })
-            // for (let i = 0;i < $('.images .img img').length)
+            // 方法三、取出 z[i].Trail，得到距離最近的資料，每個步道各別的介紹網站，用 cheerio 並取出他們的封面圖(目前抓到不 length)
+            // for (let j = 0 ; j < $('.images .img').length ; j++) {
+              // const response = await axios.get('https://recreation.forest.gov.tw/Trail/RT?tr_id=' + z[i].Trail)
+              // const $ = cheerio.load(response)
+              // console.log($('.images .img').length)
+              // }
 
-            // console.log($('#result_block').length)
-            // for (let j = 0; j < $('.web_aera_block .img_block img').length; j++) {
-
-            // }
             // text 只給變數會無效，需要給一個字串
             flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
+            flex.contents.contents[0].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
             flex.contents.contents[i].body.action.text = '!flex ' + z[i].trailName
             flex.contents.contents[i].body.contents[1].contents[5].size = 'sm'
             flex.contents.contents[i].body.contents[1].contents[5].text = 'EXPE'
             flex.contents.contents[i].body.contents[1].contents[5].color = '#800080'
-            // flex.contents.contents[i].body.spacing = 'xs'
-            // console.log(flex.contents.contents[i].body.spacing)
             flex.contents.contents[i].body.contents[2].contents[0].margin = 'md'
             if (z[i].Dif === '1') {
               for (let j = 1; j < 4; j++) {

@@ -6,7 +6,6 @@ import { distance } from '../經緯度間距離.js'
 export default async (event) => {
   const name = event.message.text.replace('!name ', '')
   // console.log(event.message.location)
-  // console.log(666)
   try {
     for (const info of data) {
       // !name /登山口/ -> 顯示這個入口的座標
