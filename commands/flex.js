@@ -2,7 +2,9 @@ import template from '../template/flex.js'
 import { data, data1 } from '../data.js'
 import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
-// import axios from 'axios'
+import axios from 'axios'
+import cheerio from 'cheerio'
+import linebot from 'linebot'
 
 export default async (event) => {
   const flexX = event.message.text.replace('!flex ', '')
@@ -42,7 +44,7 @@ export default async (event) => {
             const tra = data[i].TRAILID
             const dif = data[i].TR_DIF_CLASS
             // 將距離四捨五入到小數點第二位
-            function roundToTwo (num) {
+            function roundToTwo(num) {
               return +(Math.round(num + 'e+2') + 'e-2')
             }
             const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif }
@@ -63,11 +65,32 @@ export default async (event) => {
             }
           }
 
+          // axios.get('https://recreation.forest.gov.tw/Forest/Query')
+          //   .then(response => {
+          //     data2 = response.data
+          //   })
+          // const $ = cheerio.load(data2)
           // !flex /火車站/ -> 顯示最近的 8 個步道
           for (let i = 0; i < 8; i++) {
             flex.contents.contents.length = 8
             flex.contents.contents[i].body.contents[0].text = '🌳' + z[i].trailName
-            flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+            // 方法一、讓無效的圖片網址空白
+            // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+            // 方法二、假圖放空格，但這裡必須要 await，用此方法會等待他跑 8 次才會回覆 !flex，大概隔 3 秒。
+            await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg')
+              .then(({ data }) => {
+                // console.log('yes')
+                flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+              }).catch(error => {
+                // console.log('no')
+                flex.contents.contents[i].hero.url = 'https://picsum.photos/1920/1080/?random=' + `${i + 15}`
+              })
+            // for (let i = 0;i < $('.images .img img').length)
+
+            // console.log($('#result_block').length)
+            // for (let j = 0; j < $('.web_aera_block .img_block img').length; j++) {
+
+            // }
             // text 只給變數會無效，需要給一個字串
             flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
             flex.contents.contents[i].body.action.text = '!flex ' + z[i].trailName
@@ -75,7 +98,7 @@ export default async (event) => {
             flex.contents.contents[i].body.contents[1].contents[5].text = 'EXPE'
             flex.contents.contents[i].body.contents[1].contents[5].color = '#800080'
             // flex.contents.contents[i].body.spacing = 'xs'
-            console.log(flex.contents.contents[i].body.spacing)
+            // console.log(flex.contents.contents[i].body.spacing)
             flex.contents.contents[i].body.contents[2].contents[0].margin = 'md'
             if (z[i].Dif === '1') {
               for (let j = 1; j < 4; j++) {
