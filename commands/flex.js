@@ -5,13 +5,10 @@ import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
 import axios from 'axios'
 import cheerio from 'cheerio'
-// import linebot from 'linebot'
 
 export default async (event) => {
   const flexX = event.message.text.replace('!flex ', '')
-  // console.log(event)
   const flex = JSON.parse(JSON.stringify(template))
-  // const quick = JSON.parse(JSON.stringify(template2))
 
   try {
     flex.altText = '哈囉'
@@ -67,12 +64,6 @@ export default async (event) => {
               }
             }
           }
-
-          // axios.get('https://recreation.forest.gov.tw/Forest/Query')
-          //   .then(response => {
-          //     data2 = response.data
-          //   })
-          // const $ = cheerio.load(data2)
           // !flex /火車站/ -> 顯示最近的 8 個步道
           for (let i = 0; i < 8; i++) {
             flex.contents.contents.length = 8
@@ -98,14 +89,13 @@ export default async (event) => {
                 // console.log('no')
                 flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
               })
-            // 方法三、取出 z[i].Trail，得到距離最近的資料，每個步道各別的介紹網站，用 cheerio 並取出他們的封面圖(目前抓到不 length)
-            // 問題: 不用 await 會出錯，用了要等很久才會回復
+            // 方法三、取出 z[i].Trail，得到距離最近的資料，每個步道各別的介紹網站，用 cheerio 並取出他們的封面圖(目前抓到不 length -> !new 將 axios.get 內的網址用樣板字串(用反引號)變成字串才行 )
+            // 問題: 不用 await 會出錯，用了要等很久才會回復，大概等 10 秒左右，因為 await 這裡大概 1 秒跑一次。
             // const { data } = await axios.get(`https://recreation.forest.gov.tw/Trail/RT?tr_id=${z[i].Trail}`)
             // const $ = cheerio.load(data)
-            // console.log($('.images img').length)
+            // console.log($('.images img').eq(0).attr('src'))
             // console.log('-----------------')
-            // console.log('https://recreation.forest.gov.tw/Trail/RT?tr_id=' + z[i].Trail)
-            // console.log(response)
+            // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/' + $('.images img').eq(0).attr('src')
 
             // text 只給變數會無效，需要給一個字串
             flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'

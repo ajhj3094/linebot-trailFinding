@@ -1,14 +1,21 @@
 export default {
   type: 'text', // ①
-  text: 'Select your favorite food category or send me your location!',
+  text: 'Select a label!',
   quickReply: { // ②
     items: [
+      {
+        type: 'action', // ④
+        action: {
+          type: 'location',
+          label: 'Send location'
+        }
+      },
       {
         type: 'action', // ③
         imageUrl: 'https://example.com/sushi.png',
         action: {
           type: 'message',
-          label: 'Xizhi',
+          label: 'TrailCards',
           text: '!flex 汐止'
         }
       },
@@ -17,7 +24,7 @@ export default {
         imageUrl: 'https://example.com/sushi.png',
         action: {
           type: 'message',
-          label: 'Xizhi',
+          label: 'TrailheadCards',
           text: '!flex 聖母登山步道'
         }
       },
@@ -26,7 +33,7 @@ export default {
         imageUrl: 'https://example.com/tempura.png',
         action: {
           type: 'postback',
-          label: 'Buy',
+          label: 'Trails',
           data: 'action=buy&itemid=111',
           text: '!name 汐止'
         }
@@ -36,7 +43,7 @@ export default {
         imageUrl: 'https://example.com/tempura.png',
         action: {
           type: 'postback',
-          label: 'Buy',
+          label: 'TrailLocation',
           data: 'action=buy&itemid=111',
           text: '!name 聖母登山步道'
         }
@@ -46,16 +53,9 @@ export default {
         imageUrl: 'https://example.com/tempura.png',
         action: {
           type: 'postback',
-          label: 'Buy',
+          label: 'TrailheadLocation ',
           data: 'action=buy&itemid=111',
           text: '!name 粗坑村'
-        }
-      },
-      {
-        type: 'action', // ④
-        action: {
-          type: 'location',
-          label: 'Send location'
         }
       }
     ]
