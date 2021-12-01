@@ -99,11 +99,13 @@ export default async (event) => {
                 flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
               })
             // 方法三、取出 z[i].Trail，得到距離最近的資料，每個步道各別的介紹網站，用 cheerio 並取出他們的封面圖(目前抓到不 length)
-            // for (let j = 0 ; j < $('.images .img').length ; j++) {
-              // const response = await axios.get('https://recreation.forest.gov.tw/Trail/RT?tr_id=' + z[i].Trail)
-              // const $ = cheerio.load(response)
-              // console.log($('.images .img').length)
-              // }
+            // 問題: 不用 await 會出錯，用了要等很久才會回復
+            // const { data } = await axios.get(`https://recreation.forest.gov.tw/Trail/RT?tr_id=${z[i].Trail}`)
+            // const $ = cheerio.load(data)
+            // console.log($('.images img').length)
+            // console.log('-----------------')
+            // console.log('https://recreation.forest.gov.tw/Trail/RT?tr_id=' + z[i].Trail)
+            // console.log(response)
 
             // text 只給變數會無效，需要給一個字串
             flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
