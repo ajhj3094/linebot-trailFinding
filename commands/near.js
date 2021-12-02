@@ -59,7 +59,7 @@ export default async (event) => {
         })
       // text 只給變數會無效，需要給一個字串
       flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
-      flex.contents.contents[i].body.action.text = '!flex ' + z[i].trailName
+      flex.contents.contents[i].body.action.text = '!trail ' + z[i].trailName
       if (z[i].Dif === '1') {
         for (let j = 1; j < 4; j++) {
           flex.contents.contents[i].body.contents[1].contents[j].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png'
@@ -76,11 +76,76 @@ export default async (event) => {
         flex.contents.contents[i].body.contents[1].contents[4].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png'
       }
     }
-    event.reply(flex)
-    return
+    event.reply(
+      [flex,
+        {
+          type: 'text', // ①
+          text: 'Select a label!',
+          quickReply: { // ②
+            items: [
+              {
+                type: 'action', // ④
+                action: {
+                  type: 'location',
+                  label: 'Send location'
+                }
+              },
+              {
+                type: 'action', // ③
+                imageUrl: 'https://www.designevo.com/res/templates/thumb_small/red-sun-and-mountain-camping.webp',
+                action: {
+                  type: 'message',
+                  label: 'Trails',
+                  text: '!train 汐止'
+                }
+              },
+              {
+                type: 'action', // ③
+                imageUrl: 'https://www.designevo.com/res/templates/thumb_small/beautiful-stream-and-mountain-landscape.webp',
+                action: {
+                  type: 'message',
+                  label: 'Trailheads',
+                  text: '!trailhead 聖母登山步道'
+                }
+              },
+              {
+                type: 'action',
+                imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-9.jpg',
+                action: {
+                  type: 'postback',
+                  label: 'Trails Intro',
+                  data: 'action=buy&itemid=111',
+                  text: '@train 汐止'
+                }
+              },
+              {
+                type: 'action',
+                imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-2.jpg',
+                action: {
+                  type: 'postback',
+                  label: 'Trail Location',
+                  data: 'action=buy&itemid=111',
+                  text: '@trail 聖母登山步道'
+                }
+              },
+              {
+                type: 'action',
+                imageUrl: 'https://www.designevo.com/res/templates/thumb_small/black-circle-and-white-mountain.webp',
+                action: {
+                  type: 'postback',
+                  label: 'Trailhead Location',
+                  data: 'action=buy&itemid=111',
+                  text: '@trailhead 粗坑村'
+                }
+              }
+            ]
+          }
+        }]
+    )
     // event.reply('找不到')
+    return
   } catch (error) {
     console.log(error)
-    event.reply('發生錯誤')
+    event.reply([{ type: 'text', text: '發生錯誤' }, quick])
   }
 }

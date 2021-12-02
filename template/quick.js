@@ -12,50 +12,50 @@ export default {
       },
       {
         type: 'action', // ③
-        imageUrl: 'https://example.com/sushi.png',
+        imageUrl: 'https://www.designevo.com/res/templates/thumb_small/red-sun-and-mountain-camping.webp',
         action: {
           type: 'message',
-          label: 'TrailCards',
-          text: '!flex 汐止'
+          label: 'Trails',
+          text: '!train 汐止'
         }
       },
       {
         type: 'action', // ③
-        imageUrl: 'https://example.com/sushi.png',
+        imageUrl: 'https://www.designevo.com/res/templates/thumb_small/beautiful-stream-and-mountain-landscape.webp',
         action: {
           type: 'message',
-          label: 'TrailheadCards',
-          text: '!flex 聖母登山步道'
+          label: 'Trailheads',
+          text: '!trail 聖母登山步道'
         }
       },
       {
         type: 'action',
-        imageUrl: 'https://example.com/tempura.png',
+        imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-9.jpg',
         action: {
           type: 'postback',
-          label: 'Trails',
+          label: 'Trails Intro',
           data: 'action=buy&itemid=111',
-          text: '!name 汐止'
+          text: '@train 汐止'
         }
       },
       {
         type: 'action',
-        imageUrl: 'https://example.com/tempura.png',
+        imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-2.jpg',
         action: {
           type: 'postback',
-          label: 'TrailLocation',
+          label: 'Trail Location',
           data: 'action=buy&itemid=111',
-          text: '!name 聖母登山步道'
+          text: '@trail 聖母登山步道'
         }
       },
       {
         type: 'action',
-        imageUrl: 'https://example.com/tempura.png',
+        imageUrl: 'https://www.designevo.com/res/templates/thumb_small/black-circle-and-white-mountain.webp',
         action: {
           type: 'postback',
-          label: 'TrailheadLocation ',
+          label: 'Trailhead Location',
           data: 'action=buy&itemid=111',
-          text: '!name 粗坑村'
+          text: '@trailhead 粗坑村'
         }
       }
     ]

@@ -9,7 +9,7 @@ export default {
         size: 'micro',
         hero: {
           type: 'image',
-          url: 'https://picsum.photos/1920/1080/?random=1',
+          url: 'https://recreation.forest.gov.tw/Files/RT/index/026.jpg',
           size: 'full',
           aspectMode: 'cover',
           aspectRatio: '320:213'
@@ -864,7 +864,7 @@ export default {
         size: 'micro',
         hero: {
           type: 'image',
-          url: 'https://picsum.photos/1920/1080/?random=10',
+          url: 'https://recreation.forest.gov.tw/Files/RT/Photo/066/05/066.jpg',
           size: 'full',
           aspectMode: 'cover',
           aspectRatio: '320:213'
