@@ -8,8 +8,7 @@ import name from './commands/name.js'
 import region from './commands/region.js'
 import flex from './commands/flex.js'
 import near from './commands/near.js'
-import quick1 from './commands/quick.js'
-import quick from './template/quick.js'
+import quick from './template/tem_quick.js'
 
 // 設定機器人
 const bot = linebot({
@@ -26,19 +25,15 @@ bot.on('message', async (event) => {
   if (event.message.type === 'text') {
     // 回傳的 json 內容請參考 line 文件 -> Documentation -> Messaging API -> Messaging API -> Webhook Event Objects
     // 或直接在講義的連結 "LINE文件"連結
-    // console.log(event)
-    // console.log('-----------------------')
-    if (event.message.text.startsWith('@trailhead ') || event.message.text.startsWith('@train ') || event.message.text.startsWith('@trail ')) {
+    if (event.message.text.startsWith('@trailhead ') || event.message.text.startsWith('@train ') || event.message.text.startsWith('@trail ') || event.message.text.startsWith('@search ')) {
       name(event)
     } else if (event.message.text.startsWith('!region ')) {
       region(event)
     } else if (event.message.text.startsWith('!trail') || event.message.text.startsWith('!train')) {
       flex(event)
     } else if (event.message.text === '!help' || event.message.text === '!help ' || event.message.text === 'D' || event.message.text === 'H') {
-      quick1(event)
-      // const { data } = await axios.get('https://recreation.forest.gov.tw/Forest/Query')
-      // const $ = cheerio.load(data)
-      // console.log($('.web_aera_block').length)
+      // 這裡直接回覆 template/quick 所以直接 event.reply(quick)，而不是原本的 quick(event) --016
+      event.reply(quick)
     } else {
       event.reply([
         { type: 'text', text: '🔔格式錯誤，請參考指令範本' },
@@ -48,8 +43,5 @@ bot.on('message', async (event) => {
     }
   } else if (event.message.type === 'location') {
     near(event)
-    // console.log(event)
-
-    // console.log(event.message.latitude, event.message.longitude)
   }
 })

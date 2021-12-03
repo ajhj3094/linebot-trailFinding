@@ -1,21 +1,21 @@
-import template from '../template/flex.js'
-// import template2 from '../template/quick.js'
+import template from '../template/tem_flex.js'
+import template2 from '../template/tem_quick.js'
 import { data, data1 } from '../data.js'
 import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
 import axios from 'axios'
-import quick from '../template/quick.js'
 
 export default async (event) => {
-  const flexX = event.message.text.replace('!trail ', '')
-  const flexY = event.message.text.replace('!train ', '')
+  const trail = event.message.text.replace('!trail ', '')
+  const train = event.message.text.replace('!train ', '')
   const flex = JSON.parse(JSON.stringify(template))
+  const quick = JSON.parse(JSON.stringify(template2))
 
   try {
     flex.altText = '多久沒運動了你'
     for (const info of data) {
       // 跑 data 這個陣列內含有 name 的值，這裡是回傳該 name 所屬的整個物件
-      if (info.TR_CNAME === flexX) {
+      if (info.TR_CNAME === trail) {
         // !flex /步道名稱/ -> 顯示所有登山口
         for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
           flex.contents.contents.length = info.TR_ENTRANCE.length
@@ -24,74 +24,12 @@ export default async (event) => {
           flex.contents.contents[i].body.action.text = '@trailhead ' + info.TR_ENTRANCE[i].memo
         }
         event.reply(
-          [flex, {
-            type: 'text', // ①
-            text: 'Select a label!',
-            quickReply: { // ②
-              items: [
-                {
-                  type: 'action', // ④
-                  action: {
-                    type: 'location',
-                    label: 'Send location'
-                  }
-                },
-                {
-                  type: 'action', // ③
-                  imageUrl: 'https://www.designevo.com/res/templates/thumb_small/red-sun-and-mountain-camping.webp',
-                  action: {
-                    type: 'message',
-                    label: 'Trails',
-                    text: '!train 汐止'
-                  }
-                },
-                {
-                  type: 'action', // ③
-                  imageUrl: 'https://www.designevo.com/res/templates/thumb_small/beautiful-stream-and-mountain-landscape.webp',
-                  action: {
-                    type: 'message',
-                    label: 'Trailheads',
-                    text: '!trailhead 聖母登山步道'
-                  }
-                },
-                {
-                  type: 'action',
-                  imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-9.jpg',
-                  action: {
-                    type: 'postback',
-                    label: 'Trails Intro',
-                    data: 'action=buy&itemid=111',
-                    text: '@train 汐止'
-                  }
-                },
-                {
-                  type: 'action',
-                  imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-2.jpg',
-                  action: {
-                    type: 'postback',
-                    label: 'Trail Location',
-                    data: 'action=buy&itemid=111',
-                    text: '@trail 聖母登山步道'
-                  }
-                },
-                {
-                  type: 'action',
-                  imageUrl: 'https://www.designevo.com/res/templates/thumb_small/black-circle-and-white-mountain.webp',
-                  action: {
-                    type: 'postback',
-                    label: 'Trailhead Location',
-                    data: 'action=buy&itemid=111',
-                    text: '@trailhead 粗坑村'
-                  }
-                }
-              ]
-            }
-          }]
+          [flex, quick]
         )
         return
       }
       for (const ts of data1) {
-        if (ts.stationName === flexY) {
+        if (ts.stationName === train) {
           const newGps = ts.gps.split(' ')
           const Px = newGps[0]
           const Py = newGps[1]
@@ -110,7 +48,7 @@ export default async (event) => {
             const dif = data[i].TR_DIF_CLASS
             const alt = data[i].TR_ALT
             // 將距離四捨五入到小數點第二位
-            function roundToTwo(num) {
+            function roundToTwo (num) {
               return +(Math.round(num + 'e+2') + 'e-2')
             }
             const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif, Alt: alt }
@@ -135,10 +73,14 @@ export default async (event) => {
             flex.contents.contents.length = 8
             flex.contents.contents[i].body.contents[0].text = '🌳 ' + z[i].trailName
             // 方法一、讓無效的圖片網址空白
+            // 1.
             // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
+            // 2.
             // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg'
+
             // 方法二、假圖放空格，但這裡必須要 await，用此方法會等待他跑 8 次才會回覆 !flex，大概隔 3 秒。
             // 這邊必須使用 await，否則圖片會失效
+            // 1.
             // await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg')
             //   .then(({ data }) => {
             //     // console.log('yes')
@@ -147,12 +89,14 @@ export default async (event) => {
             //     // console.log('no')
             //     flex.contents.contents[i].hero.url = 'https://picsum.photos/1920/1080/?random=' + `${i + 15}`
             //   })
+            // 2.
             await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg')
               .then(({ data }) => {
-                // console.log('yes')
+                // 如果這個網址有效
                 flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg'
-              }).catch(error => {
-                // console.log('no')
+              }).catch((error) => {
+                // 如果這個網址無效
+                console.log(error)
                 flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
               })
             // 方法三、取出 z[i].Trail，得到距離最近的資料，每個步道各別的介紹網站，用 cheerio 並取出他們的封面圖(目前抓到不 length -> !new 將 axios.get 內的網址用樣板字串(用反引號)變成字串才行 )
@@ -165,7 +109,6 @@ export default async (event) => {
 
             // text 只給變數會無效，需要給一個字串
             flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n📍海拔➟' + z[i].Alt + '公尺\n\n👉點我查看所有入口'
-            // flex.contents.contents[0].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
             flex.contents.contents[i].body.action.text = '!trail ' + z[i].trailName
             flex.contents.contents[i].body.contents[1].contents[5].size = 'sm'
             flex.contents.contents[i].body.contents[1].contents[5].text = 'EXPE'
@@ -195,70 +138,7 @@ export default async (event) => {
               flex.contents.contents[i].body.contents[1].contents[5].color = '#d2691e'
             }
           }
-          event.reply([flex, {
-            type: 'text', // ①
-            text: 'Select a label!',
-            quickReply: { // ②
-              items: [
-                {
-                  type: 'action', // ④
-                  action: {
-                    type: 'location',
-                    label: 'Send location'
-                  }
-                },
-                {
-                  type: 'action', // ③
-                  imageUrl: 'https://www.designevo.com/res/templates/thumb_small/red-sun-and-mountain-camping.webp',
-                  action: {
-                    type: 'message',
-                    label: 'Trails',
-                    text: '!train 汐止'
-                  }
-                },
-                {
-                  type: 'action', // ③
-                  imageUrl: 'https://www.designevo.com/res/templates/thumb_small/beautiful-stream-and-mountain-landscape.webp',
-                  action: {
-                    type: 'message',
-                    label: 'Trailheads',
-                    text: '!trailhead 聖母登山步道'
-                  }
-                },
-                {
-                  type: 'action',
-                  imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-9.jpg',
-                  action: {
-                    type: 'postback',
-                    label: 'Trails Intro',
-                    data: 'action=buy&itemid=111',
-                    text: '@train 汐止'
-                  }
-                },
-                {
-                  type: 'action',
-                  imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-2.jpg',
-                  action: {
-                    type: 'postback',
-                    label: 'Trail Location',
-                    data: 'action=buy&itemid=111',
-                    text: '@trail 聖母登山步道'
-                  }
-                },
-                {
-                  type: 'action',
-                  imageUrl: 'https://www.designevo.com/res/templates/thumb_small/black-circle-and-white-mountain.webp',
-                  action: {
-                    type: 'postback',
-                    label: 'Trailhead Location',
-                    data: 'action=buy&itemid=111',
-                    text: '@trailhead 粗坑村'
-                  }
-                }
-              ]
-            }
-          }])
-          // event.reply(quick)
+          event.reply([flex, quick])
           return
         }
       }

@@ -1,13 +1,15 @@
-import template from '../template/flex.js'
+import template from '../template/tem_flex.js'
+import template2 from '../template/tem_quick.js'
 import { data } from '../data.js'
 import transform from '../轉換經緯度.js'
 import { distance } from '../經緯度間距離.js'
 import axios from 'axios'
 
 export default async (event) => {
-  // event.message.latitude
-  // event.message.longitude
+  // event.message.latitude 取得緯度
+  // event.message.longitude 取得經度
   const flex = JSON.parse(JSON.stringify(template))
+  const quick = JSON.parse(JSON.stringify(template2))
   try {
     flex.altText = '哈囉'
     const arr = []
@@ -24,7 +26,7 @@ export default async (event) => {
       const tra = data[i].TRAILID
       const dif = data[i].TR_DIF_CLASS
       // 將距離四捨五入到小數點第二位
-      function roundToTwo(num) {
+      function roundToTwo (num) {
         return +(Math.round(num + 'e+2') + 'e-2')
       }
       const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif }
@@ -48,13 +50,11 @@ export default async (event) => {
     for (let i = 0; i < 8; i++) {
       flex.contents.contents.length = 8
       flex.contents.contents[i].body.contents[0].text = '🌳' + z[i].trailName
-      // flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
       await axios.get('https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg')
         .then(({ data }) => {
-          // console.log('yes')
           flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/' + z[i].Trail + '.jpg'
         }).catch(error => {
-          // console.log('no')
+          console.log(error)
           flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
         })
       // text 只給變數會無效，需要給一個字串
@@ -77,72 +77,8 @@ export default async (event) => {
       }
     }
     event.reply(
-      [flex,
-        {
-          type: 'text', // ①
-          text: 'Select a label!',
-          quickReply: { // ②
-            items: [
-              {
-                type: 'action', // ④
-                action: {
-                  type: 'location',
-                  label: 'Send location'
-                }
-              },
-              {
-                type: 'action', // ③
-                imageUrl: 'https://www.designevo.com/res/templates/thumb_small/red-sun-and-mountain-camping.webp',
-                action: {
-                  type: 'message',
-                  label: 'Trails',
-                  text: '!train 汐止'
-                }
-              },
-              {
-                type: 'action', // ③
-                imageUrl: 'https://www.designevo.com/res/templates/thumb_small/beautiful-stream-and-mountain-landscape.webp',
-                action: {
-                  type: 'message',
-                  label: 'Trailheads',
-                  text: '!trailhead 聖母登山步道'
-                }
-              },
-              {
-                type: 'action',
-                imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-9.jpg',
-                action: {
-                  type: 'postback',
-                  label: 'Trails Intro',
-                  data: 'action=buy&itemid=111',
-                  text: '@train 汐止'
-                }
-              },
-              {
-                type: 'action',
-                imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-2.jpg',
-                action: {
-                  type: 'postback',
-                  label: 'Trail Location',
-                  data: 'action=buy&itemid=111',
-                  text: '@trail 聖母登山步道'
-                }
-              },
-              {
-                type: 'action',
-                imageUrl: 'https://www.designevo.com/res/templates/thumb_small/black-circle-and-white-mountain.webp',
-                action: {
-                  type: 'postback',
-                  label: 'Trailhead Location',
-                  data: 'action=buy&itemid=111',
-                  text: '@trailhead 粗坑村'
-                }
-              }
-            ]
-          }
-        }]
+      [flex, quick]
     )
-    // event.reply('找不到')
     return
   } catch (error) {
     console.log(error)

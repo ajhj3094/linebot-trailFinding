@@ -35,6 +35,26 @@ export default {
           type: 'postback',
           label: 'Trails Intro',
           data: 'action=buy&itemid=111',
+          text: '@search 宜蘭縣'
+        }
+      },
+      {
+        type: 'action',
+        imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-9.jpg',
+        action: {
+          type: 'postback',
+          label: 'Trails Intro',
+          data: 'action=buy&itemid=111',
+          text: '@search 加里山'
+        }
+      },
+      {
+        type: 'action',
+        imageUrl: 'https://images.uiiiuiii.com/wp-content/uploads/2017/10/itz-logo20171016-5-9.jpg',
+        action: {
+          type: 'postback',
+          label: 'Trails Intro',
+          data: 'action=buy&itemid=111',
           text: '@train 汐止'
         }
       },
