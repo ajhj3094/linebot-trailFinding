@@ -28,7 +28,7 @@ bot.on('message', async (event) => {
       name(event)
     } else if (event.message.text.startsWith('!trail') || event.message.text.startsWith('!train')) {
       flex(event)
-    } else if (event.message.text === '!help' || event.message.text === '!help ' || event.message.text === 'D' || event.message.text === 'H') {
+    } else if (event.message.text === 'help' || event.message.text === 'help ' || event.message.text === 'D' || event.message.text === 'H') {
       // 這裡直接回覆 template/quick 所以直接 event.reply(quick)，而不是原本的 quick(event) --016
       event.reply(quick)
     } else {
