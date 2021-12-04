@@ -4,15 +4,17 @@ import template2 from '../template/tem_quick.js'
 import { distance } from '../經緯度間距離.js'
 
 export default async (event) => {
+  const search = event.message.text.replace('@search ', '')
+  const search6 = event.message.text.replace('@search6 ', '')
   const trailhead = event.message.text.replace('@trailhead ', '')
   const trail = event.message.text.replace('@trail ', '')
   const train = event.message.text.replace('@train ', '')
-  const search = event.message.text.replace('@search ', '')
   const quick = JSON.parse(JSON.stringify(template2))
   try {
     for (const info of data) {
+      //! @search /步道關鍵字/ -> 查詢步道名稱 TR_CNAME 含有 search 的步道
       if (info.TR_CNAME.includes(`${search}`)) {
-        let str = `🔎${search}：\n`
+        let str = `🔎${search}－步道：\n`
         for (let i = 0; i < data.length; i++) {
           if (data[i].TR_CNAME.includes(`${search}`)) {
             str += data[i].TR_CNAME + '\n'
@@ -21,21 +23,23 @@ export default async (event) => {
         event.reply([str, quick])
         return
       }
-      if (info.TR_POSITION.includes(`${search}`)) {
-        let str = `🔎${search}：\n`
+      //! @search /縣市 or 鄉鎮區 關鍵字/ -> 查詢步道位置 TR_POSITION 含有 search 的步道
+      if (info.TR_POSITION.includes(`${search6}`)) {
+        let str = `🔎${search6}－地區：\n`
         let counter = 0
         for (let i = 0; i < data.length; i++) {
-          if (data[i].TR_POSITION.includes(`${search}`)) {
+          if (data[i].TR_POSITION.includes(`${search6}`)) {
             str += data[i].TR_CNAME + '\n'
             counter++
           }
         }
+        const result = `${str}\n(${counter}筆結果)`
         console.log(counter)
-        event.reply([str, quick])
+        event.reply([result, quick])
         return
       }
-      // !name /登山口/ -> 顯示這個入口的座標
-      // 需要再想更好的寫法，判斷陣列內物件的值等於 name
+      //! @trailhead /登山口/ -> 顯示這個入口的座標
+      // 需要再想更好的寫法，判斷陣列內物件的值等於 trailhead
       if (info.TR_ENTRANCE !== trailhead) {
         for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
           if (info.TR_ENTRANCE[i].memo === trailhead) {
@@ -54,11 +58,12 @@ export default async (event) => {
           }
         }
       }
-      // !name /步道名稱/ -> 該步道的入口座標，有時回傳多個、有時回傳一個
-      // 跑 data 這個陣列內含有 name 的值，這裡是回傳該 name 所屬的整個物件
+      //! @trail /步道名稱/ -> 該步道的入口座標，大多不只一個
+      // 跑 data 這個陣列內含有 trail 的值，這裡是回傳該 trail 所屬的整個物件
       if (info.TR_CNAME === trail) {
+        const arr22 = []
         for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
-          event.reply([
+          arr22.push(
             {
               type: 'location',
               // 每個步道的登山口數量不同
@@ -66,14 +71,16 @@ export default async (event) => {
               address: '📍' + info.TR_POSITION + '-' + info.TR_ENTRANCE[i].memo,
               latitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lat,
               longitude: transform(info.TR_ENTRANCE[i].x, info.TR_ENTRANCE[i].y).lng
-            },
-            quick
-          ])
+            }
+          )
         }
+        arr22.push(quick)
+        console.log(arr22)
+        event.reply(arr22)
         return
       }
       for (const ts of data1) {
-        // !name /火車站名/ -> 與該車站距離最近的 5 個步道，站名字數為 2
+        //! @train /火車站名/ -> 與該車站距離最近的 5 個步道，站名如臺北、臺中，需使用「臺」而非「台」
         if (ts.stationName === train) {
           const newGps = ts.gps.split(' ')
           const Px = newGps[0]
@@ -119,12 +126,20 @@ export default async (event) => {
           event.reply([
             {
               type: 'text',
-              text: `🍁${z[0].trailName}🍁\n🌳入口➜${z[0].Entrance}\n🌳距離➟${z[0].DistanceKm} 公里\n🌳全長➟${z[0].Length}\n🌳海拔➟${z[0].Low}~${z[0].Alt} 公尺\n🌳天數➟${z[0].Day}\n🌳季節➟${z[0].Wea}\n🌳地區➟${z[0].Add}\n🌳路面➟${z[0].Pav}\n🌳查看更多➟${z[0].Url}`
+              text: `🍁${z[0].trailName}🍁\n🌳地區➟${z[0].Add}\n🌳距離➟${z[0].DistanceKm} 公里\n🌳全長➟${z[0].Length}\n🌳海拔➟${z[0].Low}~${z[0].Alt} 公尺\n🌳天數➟${z[0].Day}\n🌳季節➟${z[0].Wea}\n🌳入口➟${z[0].Entrance}\n🌳路面➟${z[0].Pav}\n🌳查看更多➟${z[0].Url}`
             },
-            { type: 'text', text: `🍁${z[1].trailName}🍁\n🌳入口➜${z[1].Entrance}\n🌳距離➟${z[1].DistanceKm} 公里\n🌳總長➟${z[1].Length}\n🌳查看更多➟${z[1].Url}` },
-            { type: 'text', text: `🍁${z[2].trailName}🍁\n🌳入口➜${z[2].Entrance}\n🌳距離➟${z[2].DistanceKm} 公里\n🌳總長➟${z[2].Length}\n🌳查看更多➟${z[2].Url}` },
-            { type: 'text', text: `🍁${z[3].trailName}🍁\n🌳入口➜${z[3].Entrance}\n🌳距離➟${z[3].DistanceKm} 公里\n🌳總長➟${z[3].Length}\n🌳查看更多➟${z[3].Url}` },
-            // { type: 'text', text: `🍁${z[4].trailName}🍁\n🌳入口➜${z[4].Entrance}\n🌳距離➟${z[4].DistanceKm} 公里\n🌳總長➟${z[4].Length}\n🌳查看更多➟${z[4].Url}` }
+            {
+              type: 'text',
+              text: `🍁${z[1].trailName}🍁\n🌳地區➟${z[1].Add}\n🌳距離➟${z[1].DistanceKm} 公里\n🌳全長➟${z[1].Length}\n🌳海拔➟${z[1].Low}~${z[1].Alt} 公尺\n🌳天數➟${z[1].Day}\n🌳季節➟${z[1].Wea}\n🌳入口➟${z[1].Entrance}\n🌳路面➟${z[1].Pav}\n🌳查看更多➟${z[1].Url}`
+            },
+            {
+              type: 'text',
+              text: `🍁${z[2].trailName}🍁\n🌳地區➟${z[2].Add}\n🌳距離➟${z[2].DistanceKm} 公里\n🌳全長➟${z[2].Length}\n🌳海拔➟${z[2].Low}~${z[2].Alt} 公尺\n🌳天數➟${z[2].Day}\n🌳季節➟${z[2].Wea}\n🌳入口➟${z[2].Entrance}\n🌳路面➟${z[2].Pav}\n🌳查看更多➟${z[2].Url}`
+            },
+            {
+              type: 'text',
+              text: `🍁${z[3].trailName}🍁\n🌳地區➟${z[3].Add}\n🌳距離➟${z[3].DistanceKm} 公里\n🌳全長➟${z[3].Length}\n🌳海拔➟${z[3].Low}~${z[3].Alt} 公尺\n🌳天數➟${z[3].Day}\n🌳季節➟${z[3].Wea}\n🌳入口➟${z[3].Entrance}\n🌳路面➟${z[3].Pav}\n🌳查看更多➟${z[3].Url}`
+            },
             quick
           ])
           return

@@ -6,17 +6,17 @@ import { distance } from '../經緯度間距離.js'
 import axios from 'axios'
 
 export default async (event) => {
-  const trail = event.message.text.replace('!trail ', '')
-  const train = event.message.text.replace('!train ', '')
   const flex = JSON.parse(JSON.stringify(template))
   const quick = JSON.parse(JSON.stringify(template2))
+  const trail = event.message.text.replace('!trail ', '')
+  const train = event.message.text.replace('!train ', '')
 
   try {
     flex.altText = '多久沒運動了你'
     for (const info of data) {
-      // 跑 data 這個陣列內含有 name 的值，這裡是回傳該 name 所屬的整個物件
+      // 跑 data 這個陣列內含有 trail 的值，這裡是回傳該 trail 所屬的整個物件
       if (info.TR_CNAME === trail) {
-        // !flex /步道名稱/ -> 顯示所有登山口
+        // !trail /步道名稱/ -> 顯示所有登山口
         for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
           flex.contents.contents.length = info.TR_ENTRANCE.length
           flex.contents.contents[i].body.contents[0].text = info.TR_ENTRANCE[i].memo + '入口' + `(${i + 1}/` + info.TR_ENTRANCE.length + ')'
@@ -68,7 +68,7 @@ export default async (event) => {
               }
             }
           }
-          // !flex /火車站/ -> 顯示最近的 8 個步道
+          // !train /火車站/ -> 顯示最近的 8 個步道
           for (let i = 0; i < 8; i++) {
             flex.contents.contents.length = 8
             flex.contents.contents[i].body.contents[0].text = '🌳 ' + z[i].trailName

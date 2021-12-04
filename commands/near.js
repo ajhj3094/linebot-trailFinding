@@ -10,11 +10,11 @@ export default async (event) => {
   // event.message.longitude 取得經度
   const flex = JSON.parse(JSON.stringify(template))
   const quick = JSON.parse(JSON.stringify(template2))
+
   try {
     flex.altText = '哈囉'
     const arr = []
     const array = []
-
     for (let i = 0; i < data.length; i++) {
       // 總共 125 筆資料，但是第 120 筆沒有登山口的座標資料，需要 continue 跳過，所以會回傳 124 筆
       if (i === 120) { continue }
