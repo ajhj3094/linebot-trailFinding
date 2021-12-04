@@ -8,10 +8,12 @@ import axios from 'axios'
 export default async (event) => {
   const flex = JSON.parse(JSON.stringify(template))
   const quick = JSON.parse(JSON.stringify(template2))
+  // const flexth = JSON.parse(JSON.stringify(template3))
   const trail = event.message.text.replace('!trail ', '')
   const train = event.message.text.replace('!train ', '')
 
   try {
+    flex.altText = '多久沒運動了你'
     flex.altText = '多久沒運動了你'
     for (const info of data) {
       // 跑 data 這個陣列內含有 trail 的值，這裡是回傳該 trail 所屬的整個物件
@@ -20,8 +22,9 @@ export default async (event) => {
         for (let i = 0; i < info.TR_ENTRANCE.length; i++) {
           flex.contents.contents.length = info.TR_ENTRANCE.length
           flex.contents.contents[i].body.contents[0].text = info.TR_ENTRANCE[i].memo + '入口' + `(${i + 1}/` + info.TR_ENTRANCE.length + ')'
-          flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '\n👉點我查看地圖位置'
+          flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍海拔➟ ' + info.TR_ENTRANCE[i].height + ' 公尺\n👉點我查看地圖位置'
           flex.contents.contents[i].body.action.text = '@trailhead ' + info.TR_ENTRANCE[i].memo
+          // flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟'
         }
         event.reply(
           [flex, quick]

@@ -1,6 +1,6 @@
 export default {
   type: 'text', // ①
-  text: '請選擇功能標籤！',
+  text: '請選擇標籤！',
   quickReply: { // ②
     items: [
       {

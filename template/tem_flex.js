@@ -1,6 +1,6 @@
 export default {
   type: 'flex',
-  altText: '123456',
+  altText: '無痕山林，你我有責！',
   contents: {
     type: 'carousel',
     contents: [
