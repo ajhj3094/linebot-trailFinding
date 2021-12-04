@@ -50,7 +50,7 @@ export default {
       },
       {
         type: 'action',
-        imageUrl: 'https://www.designevo.com/res/templates/thumb_small/beautiful-stream-and-mountain-landscape.webp',
+        imageUrl: 'https://www.clipartmax.com/png/middle/342-3420669_climb-glacier-logo-adventure-mountain-logo.png',
         action: {
           type: 'postback',
           label: '車站附近步道詳細資訊',
