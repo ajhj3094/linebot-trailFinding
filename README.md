@@ -1,7 +1,7 @@
 # 山上人間🌲🚶‍♂️🌲 - linebot
-藉由火車站位置或任意座標位置，找到附近的登山步道！  
-也可以查詢所有登山步道的距離和其它詳細資訊！  
-此機器人使用 [台灣山林悠遊網 API](https://recreation.forest.gov.tw/Service/OpenData) 和 [政府資料開放平台 API](https://data.gov.tw/dataset/33425)
+- 藉由火車站位置或任意座標位置，找到附近的登山步道！  
+- 也可以查詢所有登山步道的距離和其它詳細資訊！  
+- 此機器人使用 [台灣山林悠遊網 API](https://recreation.forest.gov.tw/Service/OpenData) 和 [政府資料開放平台 API](https://data.gov.tw/dataset/33425)
 
 ## 加入好友
 - 加入 line ID: `@789ydcgy`
