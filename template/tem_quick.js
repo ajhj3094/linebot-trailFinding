@@ -15,7 +15,7 @@ export default {
         imageUrl: 'https://cdn.dribbble.com/users/3819719/screenshots/14917636/media/b5ddf03bdd31e524b993831eee187e36.jpg?compress=1&resize=1200x900',
         action: {
           type: 'message',
-          label: '車站附近步道',
+          label: '搜尋車站附近步道',
           text: '!train 汐止'
         }
       },
@@ -24,7 +24,7 @@ export default {
         imageUrl: 'https://cdn.dribbble.com/users/3819719/screenshots/14917636/media/b5ddf03bdd31e524b993831eee187e36.jpg?compress=1&resize=1200x900',
         action: {
           type: 'message',
-          label: '步道起始點',
+          label: '搜尋步道所有入口',
           text: '!trail 聖母登山步道'
         }
       },
@@ -56,6 +56,16 @@ export default {
           label: '車站附近步道詳細資訊',
           data: 'action=buy&itemid=111',
           text: '@train 汐止'
+        }
+      },
+      {
+        type: 'action',
+        imageUrl: 'https://www.clipartmax.com/png/middle/342-3420669_climb-glacier-logo-adventure-mountain-logo.png',
+        action: {
+          type: 'postback',
+          label: '單筆步道詳細資訊',
+          data: 'action=buy&itemid=111',
+          text: '@合歡尖山步道'
         }
       },
       {

@@ -9,9 +9,40 @@ export default async (event) => {
   const trailhead = event.message.text.replace('@trailhead ', '')
   const trail = event.message.text.replace('@trail ', '')
   const train = event.message.text.replace('@train ', '')
+  const detail = event.message.text.replace('@', '')
   const quick = JSON.parse(JSON.stringify(template2))
   try {
     for (const info of data) {
+      //! @/步道完整名稱/ -> 查詢單筆步道詳細資訊
+      if (info.TR_CNAME === detail) {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].TR_CNAME === detail) {
+            if (data[i].TR_DIF_CLASS === '1') data[i].TR_DIF_CLASS = '簡單'
+            if (data[i].TR_DIF_CLASS === '2') data[i].TR_DIF_CLASS = '普通'
+            if (data[i].TR_DIF_CLASS === '3') data[i].TR_DIF_CLASS = '困難'
+            if (data[i].TR_DIF_CLASS === '4') data[i].TR_DIF_CLASS = '專家'
+            if (data[i].TR_DIF_CLASS === '5') data[i].TR_DIF_CLASS = '不可能'
+            let str = ''
+            // 資料中 data[120].TR_ENTRANCE 為空陣列，需要 push 一個 key 為 memo 的物件，下面的程式碼才能繼續判斷而不出錯
+            if (i === 120) {
+              const no = { memo: '無' }
+              data[i].TR_ENTRANCE.push(no)
+            }
+            str = data[i].TR_ENTRANCE[0].memo
+            if (data[i].TR_ENTRANCE.length > 1) {
+              for (let j = 1; j < data[i].TR_ENTRANCE.length; j++) {
+                // data[i].TR_ENTRANCE[j].memo += `、${data[i].TR_ENTRANCE[j].memo}`
+                str += `、${data[i].TR_ENTRANCE[j].memo}`
+              }
+            }
+            event.reply([{
+              type: 'text',
+              text: `——🍁${data[i].TR_CNAME}🍁——\n🌳地區➟ ${data[i].TR_POSITION}\n🌳難度➟ ${data[i].TR_DIF_CLASS}\n🌳全長➟ ${data[i].TR_LENGTH}\n🌳海拔➟ ${data[i].TR_ALT_LOW}~${data[i].TR_ALT} 公尺\n🌳天數➟ ${data[i].TR_TOUR}\n🌳季節➟ ${data[i].TR_BEST_SEASON}\n🌳入口➟ ${str}\n🌳路面➟ ${data[i].TR_PAVE}\n🌳查看更多➟ ${data[i].URL}`
+            }, quick])
+          }
+        }
+        return
+      }
       //! @search /步道關鍵字/ -> 查詢步道名稱 TR_CNAME 含有 search 的步道
       if (info.TR_CNAME.includes(`${search}`)) {
         let str = `🔎${search}－步道：\n`
