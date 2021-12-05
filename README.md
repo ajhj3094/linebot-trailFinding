@@ -22,7 +22,9 @@
 - 輸入 "D" 開啟快速回覆。共有 9 個功能標籤，並於每次回覆自動開啟  
 
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96026897.jpg?raw=true" width="300px"/>
+  
 ***
+
 ## 尋找登山步道
 <h3 id="1">一、位置訊息</h3>
 - 使用快速回覆的 `傳送座標` 標籤
@@ -33,13 +35,17 @@
   - 星星數量代表難易度等級
   - 顯示該步道和傳送座標的距離
   - 點擊卡片查看該步道的 [__登山口__](#3)
+
 ***
+
 <h3 id="2">二、車站名稱</h3>
 - 使用快速回覆的 `搜尋車站附近步道` 標籤
 - 或輸入 `!train /車站名稱/`，查詢距離火車站最近的 8 筆登山步道
 
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/D9E00656-7BFA-4278-8D7C-2E356EE8F81B.png?raw=true" width="300px"/>
+
 ***
+
 <h3 id="3">三、步道名稱</h3>
 - 使用快速回覆的 `搜尋所有步道入口` 標籤
 - 或輸入 `!trail /步道完整名稱/`，查詢此步道的所有登山口資訊
@@ -53,7 +59,9 @@
 - 使用快速回覆的 `行政區搜尋步道` 標籤，，或輸入 `@search6 /縣市鄉鎮區/`，以關鍵字搜尋該地區所有步道
   
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96034853.jpg?raw=true" width="300px"/>
+
 ***
+
 <h3 id="5">五、步道資訊</h3>
 - 使用快速回覆的 `車站附近步道詳細資訊` 標籤
 - 或輸入 `@train /車站名稱/`，查詢距離火車站最近的 4 筆步道詳細資訊
@@ -64,7 +72,9 @@
 - 或輸入 `@/步道完整名稱/`，查詢此步道的詳細資訊
 
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/B32A7EBC-438B-42E6-8007-6E82B8DF294B.png?raw=true" width="300px"/>
+
 ***
+
 <h3 id="6">六、登山口位置</h3>
 - 使用快速回覆的 `步道所有入口位置` 標籤
 - 或輸入 `@trail /步道完整名稱/`，查詢此步道所有登山口的位置，並以 (1/2) 表示兩個登山口的第一個
