@@ -25,11 +25,12 @@ export default async (event) => {
       const len = data[i].TR_LENGTH
       const tra = data[i].TRAILID
       const dif = data[i].TR_DIF_CLASS
+      const alt = data[i].TR_ALT
       // 將距離四捨五入到小數點第二位
       function roundToTwo (num) {
         return +(Math.round(num + 'e+2') + 'e-2')
       }
-      const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif }
+      const object = { trailName: trail, Entrance: ent, DistanceKm: roundToTwo(dt), Length: len, Url: url, Trail: tra, Dif: dif, Alt: alt }
       array.push(object)
       arr.push(roundToTwo(dt))
     }
@@ -58,22 +59,34 @@ export default async (event) => {
           flex.contents.contents[i].hero.url = 'https://recreation.forest.gov.tw/Files/RT/Photo/' + z[i].Trail + '/05/01.jpg'
         })
       // text 只給變數會無效，需要給一個字串
-      flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n\n👉點我查看更多入口'
+      flex.contents.contents[i].body.contents[2].contents[0].contents[0].text = '📍入口➟' + z[i].Entrance + '\n📍距離➟' + z[i].DistanceKm + '公里\n📍全長➟' + z[i].Length + '\n📍海拔➟' + z[i].Alt + '公尺\n\n👉點我查看更多入口'
       flex.contents.contents[i].body.action.text = '!trail ' + z[i].trailName
+      flex.contents.contents[i].body.contents[1].contents[5].size = 'sm'
+      flex.contents.contents[i].body.contents[1].contents[5].text = 'EXPE'
+      flex.contents.contents[i].body.contents[1].contents[5].color = '#800080'
+      flex.contents.contents[i].body.contents[2].contents[0].margin = 'md'
       if (z[i].Dif === '1') {
         for (let j = 1; j < 4; j++) {
           flex.contents.contents[i].body.contents[1].contents[j].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png'
+          flex.contents.contents[i].body.contents[1].contents[5].text = 'EASY'
+          flex.contents.contents[i].body.contents[1].contents[5].color = '#00aa00'
         }
       } else if (z[i].Dif === '2') {
         for (let j = 2; j < 4; j++) {
           flex.contents.contents[i].body.contents[1].contents[j].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png'
+          flex.contents.contents[i].body.contents[1].contents[5].text = 'NORM'
+          flex.contents.contents[i].body.contents[1].contents[5].color = '#ff8c00'
         }
       } else if (z[i].Dif === '3') {
         for (let j = 3; j < 4; j++) {
           flex.contents.contents[i].body.contents[1].contents[j].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png'
+          flex.contents.contents[i].body.contents[1].contents[5].text = 'HARD'
+          flex.contents.contents[i].body.contents[1].contents[5].color = '#ff0000'
         }
       } else if (z[i].Dif === '5') {
         flex.contents.contents[i].body.contents[1].contents[4].url = 'https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png'
+        flex.contents.contents[i].body.contents[1].contents[5].text = 'IMPO'
+        flex.contents.contents[i].body.contents[1].contents[5].color = '#d2691e'
       }
     }
     event.reply(
