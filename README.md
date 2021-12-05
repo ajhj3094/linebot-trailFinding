@@ -1,6 +1,6 @@
 # 山上人間🌲🚶‍♂️🌲 - linebot
-- 藉由火車站位置或任意座標位置，找到附近的登山步道！  
-- 也可以查詢所有登山步道的距離和其它詳細資訊！  
+- 藉由`火車站`位置或任意`座標`位置，找到附近的登山步道！  
+- 也可以查詢所有登山步道的`距離`和其它詳細資訊！  
 - 此機器人使用 [台灣山林悠遊網 API](https://recreation.forest.gov.tw/Service/OpenData) 和 [政府資料開放平台 API](https://data.gov.tw/dataset/33425)
 
 ## 加入好友
@@ -32,8 +32,8 @@
   
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/748F27E8-4AA4-4796-B06B-50D518AB5E61.jpg?raw=true" width="300px"/>  
   
-  - 星星數量代表難易度等級
-  - 顯示該步道和傳送座標的距離
+  - 星星數量代表`難易度等級`
+  - 顯示該步道和傳送座標的`距離`
   - 點擊卡片查看該步道的 [__登山口__](#步道名稱)
 
 ***
@@ -56,7 +56,7 @@
 ***
 ### 關鍵字搜尋
 - 使用快速回覆的 `步道名搜尋步道` 標籤，或輸入 `@search /步道名稱關鍵字/`，以關鍵字搜尋完整步道名稱
-- 使用快速回覆的 `行政區搜尋步道` 標籤，或輸入 `@search6 /縣市鄉鎮區/`，以關鍵字搜尋該地區所有步道
+- 使用快速回覆的 `行政區搜尋步道` 標籤，或輸入 `@search6 /縣市鄉鎮區/`，以關鍵字搜尋該地區所有登山步道
   
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96034853.jpg?raw=true" width="300px"/>
 
