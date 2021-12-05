@@ -32,7 +32,7 @@
   
   - 星星數量代表難易度等級
   - 顯示該步道和傳送座標的距離
-  - 點擊卡片查看該步道的 [__登山口__](#步道名稱)
+  - 點擊卡片查看該步道的 [__登山口__](#3)
 ---
 <h3 id="2">二、車站名稱</h3>
 - 使用快速回覆的 `搜尋車站附近步道` 標籤
@@ -46,7 +46,7 @@
 
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96034847.jpg?raw=true" width="300px"/>
 
-  - 點擊卡片查看該登山口的 [**位置**](#登山口位置)
+  - 點擊卡片查看該登山口的 [**位置**](#6)
 ---
 <h3 id="4">四、關鍵字搜尋</h3>
 - 使用快速回覆的 `步道名搜尋步道` 標籤，或輸入 `@search /步道名稱關鍵字/`，以關鍵字搜尋完整步道名稱
@@ -76,3 +76,4 @@
 
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96034858.jpg?raw=true" width="300px"/>
   
+[回到最上面](#導覽)
