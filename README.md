@@ -5,7 +5,7 @@
 - 加入 line ID: `@789ydcgy`
 - 或是掃描 [QR code](https://line.me/ti/p/@789ydcgy "加入好友")  
 
-  ![圖片](https://raw.githubusercontent.com/ajhj3094/linebot-trailsFinding/007994ad03942a23eddcab343b9aae3cb137ccac/images/789ydcgy.png)
+  <img src="https://raw.githubusercontent.com/ajhj3094/linebot-trailsFinding/007994ad03942a23eddcab343b9aae3cb137ccac/images/789ydcgy.png" width="250px"/>
 ## 導覽
 - [指令和快速回覆](#指令和快速回覆)
 - 尋找登山步道
@@ -18,7 +18,7 @@
 ## 指令和快速回覆
 - 輸入 "C" 查看所有指令  
 
-![圖片](https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96026899.jpg?raw=true)
+  <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96026899.jpg?raw=true" width="300px"/>
 - 輸入 "D" 開啟快速回覆，共有 9 個功能標籤，並且每次回覆皆自動開啟  
 
-![圖片](https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96026897.jpg?raw=true)
+  <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96026897.jpg?raw=true" width="300px"/>
