@@ -31,7 +31,7 @@
   
   - 星星數量代表難易度等級
   - 顯示該步道和傳送座標的距離
-  - 點擊卡片查看該步道的 __登山口__
+  - 點擊卡片查看該步道的 [__登山口__](#步道名稱)
 ### 車站名稱
 - 使用快速回覆的 `搜尋車站附近步道` 標籤
 - 或輸入 `!train /車站名稱/`，查詢距離火車站最近的 8 筆登山步道
@@ -43,7 +43,7 @@
 
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96034847.jpg?raw=true" width="300px"/>
 
-  - 點擊卡片查看該登山口的 **位置**
+  - 點擊卡片查看該登山口的 [**位置**](#登山口位置)
 ### 關鍵字搜尋
 - 使用快速回覆的 `步道名搜尋步道` 標籤，或輸入 `@search /步道名稱關鍵字/`，以關鍵字搜尋完整步道名稱
 - 使用快速回覆的 `行政區搜尋步道` 標籤，，或輸入 `@search6 /縣市鄉鎮區/`，以關鍵字搜尋該地區所有步道
@@ -59,4 +59,14 @@
 - 或輸入 `@/步道完整名稱/`，查詢此步道的詳細資訊
 
   <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/B32A7EBC-438B-42E6-8007-6E82B8DF294B.png?raw=true" width="300px"/>
+### 登山口位置
+- 使用快速回覆的 `步道所有入口位置` 標籤
+- 或輸入 `@trail /步道完整名稱/`，查詢此步道所有登山口的位置，並以 (1/2) 表示兩個登山口的第一個
+
+  <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96034856.jpg?raw=true" width="300px"/>
+  
+- 使用快速回覆的 `入口位置` 標籤
+- 或輸入 `@trailhead /登山口名稱/`，查詢此登山口的座標位置
+
+  <img src="https://github.com/ajhj3094/linebot-trailsFinding/blob/main/images/S__96034858.jpg?raw=true" width="300px"/>
   
