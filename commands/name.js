@@ -1,7 +1,7 @@
 import { data, data1 } from '../data.js'
-import transform from '../轉換經緯度.js'
+import transform from '../lonLatTransform.js'
 import template2 from '../template/tem_quick.js'
-import { distance } from '../經緯度間距離.js'
+import { distance } from '../lonLatDistance.js'
 
 export default async (event) => {
   const search = event.message.text.replace('@search ', '')

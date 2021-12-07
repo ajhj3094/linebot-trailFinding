@@ -1,8 +1,8 @@
 import template from '../template/tem_flex.js'
 import template2 from '../template/tem_quick.js'
 import { data } from '../data.js'
-import transform from '../轉換經緯度.js'
-import { distance } from '../經緯度間距離.js'
+import transform from '../lonLatTransform.js'
+import { distance } from '../lonLatDistance.js'
 import axios from 'axios'
 
 export default async (event) => {
